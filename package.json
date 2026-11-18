@@ -1,0 +1,36 @@
+{
+  "name": "smashq",
+  "version": "1.0.0",
+  "description": "SMASHQ Badminton Queue Management System",
+  "main": "main.js",
+  "author": "DEVKAYE",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^39.8.10",
+    "electron-builder": "^26.0.0"
+  },
+  "build": {
+    "appId": "com.devkaye.smashq",
+    "productName": "SMASHQ",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "main.js",
+      "index.html",
+      "style.css",
+      "script.js",
+      "assets/**/*",
+      "*.png"
+    ],
+    "win": {
+      "target": "nsis"
+    }
+  },
+  "allowScripts": {
+    "electron@39.8.10": true
+  }
+}

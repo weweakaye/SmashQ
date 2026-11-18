@@ -1,0 +1,882 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SMASHQ | DEVKAYE</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#160b35" />
+    <meta
+      name="description"
+      content="SMASHQ Offline Badminton Queue Management System"
+    />
+    <link rel="icon" type="image/png" href="smashq-192.png" />
+  </head>
+  <body>
+    <div class="dashboard">
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <!-- SMASHQ BRAND AT THE TOP -->
+        <div class="brand">
+          <div class="brand-icon">
+            <img src="smashq-icon.png" alt="SMASHQ Logo" />
+          </div>
+          <div class="brand-text">
+            <h2>SMASH<span>Q</span></h2>
+            <span>BADMINTON QUEUE SYSTEM</span>
+          </div>
+        </div>
+        <div class="menu-label">MAIN MENU</div>
+        <nav>
+          <a href="#" class="nav-item active" data-page="dashboard">
+            <span>▦</span> Dashboard
+          </a>
+          <a href="#" class="nav-item" data-page="players">
+            <span>♙</span> Players
+          </a>
+          <a href="#" class="nav-item" data-page="courts">
+            <span>🏸</span> Courts
+          </a>
+          <a href="#" class="nav-item" data-page="matches">
+            <span>⚔</span> Matches
+          </a>
+          <a href="#" class="nav-item" data-page="payments">
+            <span>₱</span> Payments
+          </a>
+          <a href="#" class="nav-item" data-page="history">
+            <span>◷</span> History
+          </a>
+        </nav>
+        <!-- DEVKAYE BRAND AT THE BOTTOM -->
+        <div class="sidebar-bottom">
+          <div class="developer-profile">
+            <div class="developer-logo">
+              <img src="devkaye-logo.png" alt="DEVKAYE Logo" />
+            </div>
+            <div class="developer-info">
+              <strong>Developed by:</strong>
+              <span>Kaye Ann Joy B. Oquindo</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+      <!-- MAIN CONTENT -->
+      <main class="main-content">
+        <!-- DASHBOARD PAGE -->
+        <section class="page active" id="dashboard-page">
+          <header class="topbar">
+            <div>
+              <h1>Dashboard</h1>
+              <p>Welcome back! Here's your badminton session overview.</p>
+            </div>
+            <div class="date-display">
+              <span>●</span>
+              <span id="current-date">Loading date...</span>
+            </div>
+          </header>
+          <section class="session-header">
+            <div>
+              <span class="section-tag">CURRENT SESSION</span>
+              <h2>Badminton Session</h2>
+              <p id="session-date">Today's playing session</p>
+            </div>
+            <div class="session-status">
+              <span class="status-dot"></span>
+              Session Active
+            </div>
+          </section>
+          <section class="session-management-panel">
+            <div class="session-management-heading">
+              <div>
+                <span class="section-tag">SESSION MANAGEMENT</span>
+                <h2 id="active-session-name">Session 1</h2>
+                <p id="active-session-details">Current badminton session</p>
+              </div>
+              <div class="session-management-actions">
+                <button
+                  type="button"
+                  id="rename-active-session-btn"
+                  class="session-rename-btn"
+                >
+                  Rename Session
+                </button>
+                <button
+                  type="button"
+                  id="end-session-btn"
+                  class="session-end-btn"
+                >
+                  End Current Session
+                </button>
+                <button
+                  type="button"
+                  id="start-session-btn"
+                  class="session-start-btn"
+                  disabled
+                >
+                  Start New Session
+                </button>
+              </div>
+            </div>
+            <div class="session-history-area">
+              <h3>Saved Sessions</h3>
+              <div id="saved-sessions-list" class="saved-sessions-list">
+                <p class="session-empty">No previous sessions yet.</p>
+              </div>
+            </div>
+          </section>
+          <section class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-top">
+                <span>Total Players</span>
+                <div class="stat-icon purple">♙</div>
+              </div>
+              <h2 id="total-players">0</h2>
+              <small>Registered players</small>
+            </div>
+            <div class="stat-card">
+              <div class="stat-top">
+                <span>Active Matches</span>
+                <div class="stat-icon red">⚔</div>
+              </div>
+              <h2 id="active-matches">0</h2>
+              <small>Currently playing</small>
+            </div>
+            <div class="stat-card">
+              <div class="stat-top">
+                <span>Unpaid Balance</span>
+                <div class="stat-icon green">₱</div>
+              </div>
+              <h2 id="unpaid-balance">₱0.00</h2>
+              <small>Pending payments</small>
+            </div>
+          </section>
+          <section class="dashboard-grid">
+            <div class="panel">
+              <div class="panel-heading">
+                <div>
+                  <h3>Court Overview</h3>
+                  <p>Monitor your playing courts</p>
+                </div>
+                <span class="count-label">0 Courts</span>
+              </div>
+              <div id="court-list" class="court-list">
+                <div class="empty-state">
+                  <div>🏸</div>
+                  <strong>No courts added yet</strong>
+                  <p>Your court information will appear here.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="panel payment-panel">
+            <div class="panel-heading">
+              <div>
+                <h3>Payment Summary</h3>
+                <p>Overview of session payments</p>
+              </div>
+              <span class="count-label">Current Session</span>
+            </div>
+            <div class="payment-grid">
+              <div class="payment-item">
+                <span>Total Collected</span>
+                <strong id="total-collected">₱0.00</strong>
+              </div>
+              <div class="payment-item">
+                <span>Total Unpaid</span>
+                <strong id="total-unpaid">₱0.00</strong>
+              </div>
+              <div class="payment-item">
+                <span>Payment Status</span>
+                <strong class="payment-status">No transactions</strong>
+              </div>
+            </div>
+          </section>
+        </section>
+        <!-- PLAYER MANAGEMENT PAGE -->
+        <section class="page" id="players-page">
+          <header class="topbar">
+            <div>
+              <h1>Player Management</h1>
+              <p>Register and manage badminton players.</p>
+            </div>
+            <div class="date-display"><span>●</span> Offline Mode</div>
+          </header>
+          <!-- PLAYER SUMMARY -->
+          <section class="player-summary">
+            <div>
+              <span class="section-tag">PLAYER RECORDS</span>
+              <h2 id="player-total">0</h2>
+              <p>Total registered players</p>
+            </div>
+            <div class="player-summary-icon">♙</div>
+          </section>
+          <!-- ADD PLAYER FORM -->
+          <section class="panel add-player-panel">
+            <div class="panel-heading">
+              <div>
+                <h3>Add New Player</h3>
+                <p>Enter the player's information below.</p>
+              </div>
+              <span class="count-label">NEW PLAYER</span>
+            </div>
+            <form id="player-form">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="player-name">Player Name</label>
+                  <input
+                    type="text"
+                    id="player-name"
+                    placeholder="Enter player's full name"
+                    maxlength="100"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="player-level">Player Level</label>
+                  <select id="player-level" required>
+                    <option value="">Select player level</option>
+                    <option value="A">Level A</option>
+                    <option value="B">Level B</option>
+                    <option value="C">Level C</option>
+                    <option value="Beginner">Beginner</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="student-status">Student Status</label>
+                  <select id="student-status" required>
+                    <option value="">Select status</option>
+                    <option value="Student">Student</option>
+                    <option value="Non-student">Non-student</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-actions">
+                <button type="reset" class="btn-secondary">Clear Form</button>
+                <button type="submit" class="btn-primary">+ Add Player</button>
+              </div>
+            </form>
+          </section>
+          <!-- PLAYER TABLE -->
+          <section class="panel player-list-panel">
+            <div class="panel-heading">
+              <div>
+                <h3>Registered Players</h3>
+                <p>Manage your player records.</p>
+              </div>
+              <span class="count-label" id="player-count">0 Players</span>
+            </div>
+            <div class="player-search">
+              <input
+                type="search"
+                id="player-search"
+                placeholder="Search player name..."
+              />
+            </div>
+            <div class="table-wrapper">
+              <table class="player-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>PLAYER NAME</th>
+                    <th>LEVEL</th>
+                    <th>STUDENT STATUS</th>
+                    <th>ACTION</th>
+                  </tr>
+                </thead>
+                <tbody id="player-table-body"></tbody>
+              </table>
+            </div>
+            <div id="no-players" class="empty-state">
+              <div>♙</div>
+              <strong>No registered players yet</strong>
+              <p>Add your first player using the form above.</p>
+            </div>
+          </section>
+        </section>
+        <!-- PLACEHOLDER PAGES -->
+        <!-- QUEUE MANAGEMENT PAGE -->
+        <section class="page" id="queue-page">
+          <header class="topbar">
+            <div>
+              <h1>Queue Management</h1>
+              <p>Organize waiting players and manage their positions.</p>
+            </div>
+            <div class="date-display"><span>●</span> Offline Mode</div>
+          </header>
+          <!-- QUEUE SUMMARY -->
+          <section class="player-summary">
+            <div>
+              <span class="section-tag">WAITING PLAYERS</span>
+              <h2 id="queue-total">0</h2>
+              <p>Players currently waiting for their turn</p>
+            </div>
+            <div class="player-summary-icon">☷</div>
+          </section>
+          <!-- ADD TO QUEUE -->
+          <section class="panel add-player-panel">
+            <div class="panel-heading">
+              <div>
+                <h3>Add Player to Queue</h3>
+                <p>Select a registered player to join the waiting list.</p>
+              </div>
+              <span class="count-label">QUEUE ENTRY</span>
+            </div>
+            <form id="queue-form">
+              <div class="form-grid queue-form-grid">
+                <div class="form-group">
+                  <label for="queue-player">Select Player</label>
+                  <select id="queue-player" required>
+                    <option value="">Choose a registered player</option>
+                  </select>
+                </div>
+                <div class="form-group queue-button-group">
+                  <label>&nbsp;</label>
+                  <button type="submit" class="btn-primary">
+                    + Add to Waiting Queue
+                  </button>
+                </div>
+              </div>
+            </form>
+          </section>
+          <!-- WAITING LIST -->
+          <section class="panel player-list-panel">
+            <div class="panel-heading">
+              <div>
+                <h3>Waiting Queue</h3>
+                <p>Manage the order of players waiting to play.</p>
+              </div>
+              <span class="count-label" id="queue-count-label">
+                0 Players
+              </span>
+            </div>
+            <div class="table-wrapper">
+              <table class="player-table queue-table">
+                <thead>
+                  <tr>
+                    <th>POSITION</th>
+                    <th>PLAYER NAME</th>
+                    <th>LEVEL</th>
+                    <th>STUDENT STATUS</th>
+                    <th>STATUS</th>
+                    <th>ACTION</th>
+                  </tr>
+                </thead>
+                <tbody id="queue-table-body"></tbody>
+              </table>
+            </div>
+            <div id="queue-empty" class="empty-state">
+              <div>☷</div>
+              <strong>Queue is currently empty</strong>
+              <p>Add registered players to begin your waiting queue.</p>
+            </div>
+          </section>
+        </section>
+        <!-- COURT MANAGEMENT PAGE -->
+        <section class="page" id="courts-page">
+          <header class="topbar">
+            <div>
+              <h1>Court Management</h1>
+              <p>Add, rename, and monitor your badminton courts.</p>
+            </div>
+            <div class="date-display"><span>●</span> Offline Mode</div>
+          </header>
+          <!-- COURT SUMMARY -->
+          <section class="player-summary">
+            <div>
+              <span class="section-tag">COURT OVERVIEW</span>
+              <h2 id="court-total">0</h2>
+              <p>Total registered courts</p>
+            </div>
+            <div class="player-summary-icon">🏸</div>
+          </section>
+          <!-- COURT STATUS SUMMARY -->
+          <section class="court-stats-grid">
+            <div class="court-stat-card">
+              <span>Available Courts</span>
+              <h2 id="available-courts">0</h2>
+              <span class="court-stat-dot available-dot"></span>
+            </div>
+            <div class="court-stat-card">
+              <span>Playing Courts</span>
+              <h2 id="playing-courts">0</h2>
+              <span class="court-stat-dot playing-dot"></span>
+            </div>
+          </section>
+          <!-- ADD COURT FORM -->
+          <section class="panel add-player-panel">
+            <div class="panel-heading">
+              <div>
+                <h3>Add New Court</h3>
+                <p>Register a badminton court.</p>
+              </div>
+              <span class="count-label">NEW COURT</span>
+            </div>
+            <form id="court-form">
+              <div class="form-grid court-form-grid">
+                <div class="form-group">
+                  <label for="court-name">Court Name</label>
+                  <input
+                    type="text"
+                    id="court-name"
+                    placeholder="Example: Court 1 or VIP Court"
+                    maxlength="50"
+                    required
+                  />
+                </div>
+                <div class="form-group court-button-group">
+                  <label>&nbsp;</label>
+                  <button type="submit" class="btn-primary">+ Add Court</button>
+                </div>
+              </div>
+            </form>
+          </section>
+          <!-- COURT LIST -->
+          <section class="panel court-management-panel">
+            <div class="panel-heading">
+              <div>
+                <h3>Registered Courts</h3>
+                <p>Manage court names and availability.</p>
+              </div>
+              <span class="count-label" id="court-count-label"> 0 Courts </span>
+            </div>
+            <div id="court-management-list" class="court-management-grid"></div>
+            <div id="no-courts" class="empty-state">
+              <div>🏸</div>
+              <strong>No courts registered yet</strong>
+              <p>Add your first court using the form above.</p>
+            </div>
+          </section>
+        </section>
+        <!-- MATCH MANAGEMENT PAGE -->
+        <section class="page" id="matches-page">
+          <header class="topbar">
+            <div>
+              <h1>Match Management</h1>
+              <p>
+                Create matches easily by selecting a playing level and assigning
+                players.
+              </p>
+            </div>
+            <div class="date-display"><span>●</span> Offline Mode</div>
+          </header>
+          <!-- MATCH SUMMARY -->
+          <section class="player-summary">
+            <div>
+              <span class="section-tag">MATCH OVERVIEW</span>
+              <h2 id="match-total">0</h2>
+              <p>Total matches recorded this session</p>
+            </div>
+            <div class="player-summary-icon">⚔</div>
+          </section>
+          <section class="court-stats-grid">
+            <div class="court-stat-card">
+              <span>Active Matches</span>
+              <h2 id="active-match-total">0</h2>
+            </div>
+            <div class="court-stat-card">
+              <span>Completed Matches</span>
+              <h2 id="completed-match-total">0</h2>
+            </div>
+          </section>
+          <!-- CREATE MATCH -->
+          <section class="panel add-player-panel match-creator">
+            <div class="panel-heading">
+              <div>
+                <h3>Create New Match</h3>
+                <p>
+                  Quickly build a match by level, then assign players to Team A
+                  and Team B.
+                </p>
+              </div>
+              <span class="count-label">NEW MATCH</span>
+            </div>
+            <form id="match-form">
+              <!-- COURT, LEVEL AND FEE -->
+              <div class="match-settings-grid">
+                <div class="form-group">
+                  <label for="match-court">Select Court</label>
+                  <select id="match-court" required>
+                    <option value="">Choose an available court</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Select Match Level</label>
+                  <div class="level-filter" id="match-level-filter">
+                    <button
+                      type="button"
+                      class="level-filter-btn active"
+                      data-level="All"
+                    >
+                      All Levels
+                    </button>
+                    <button
+                      type="button"
+                      class="level-filter-btn"
+                      data-level="Beginner"
+                    >
+                      Beginner
+                    </button>
+                    <button
+                      type="button"
+                      class="level-filter-btn"
+                      data-level="A"
+                    >
+                      A
+                    </button>
+                    <button
+                      type="button"
+                      class="level-filter-btn"
+                      data-level="B"
+                    >
+                      B
+                    </button>
+                    <button
+                      type="button"
+                      class="level-filter-btn"
+                      data-level="C"
+                    >
+                      C
+                    </button>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="shuttle-fee">Shuttlecock Price</label>
+                  <select id="shuttle-fee" required>
+                    <option value="25">₱25.00</option>
+                    <option value="30" selected>₱30.00</option>
+                    <option value="35">₱35.00</option>
+                    <option value="40">₱40.00</option>
+                    <option value="45">₱45.00</option>
+                    <option value="50">₱50.00</option>
+                  </select>
+                  <div class="discount-note">🎓 Students: ₱5.00 discount</div>
+                </div>
+              </div>
+              <!-- HIDDEN PLAYER SELECTS -->
+              <!-- These preserve compatibility with match processing. -->
+              <div class="hidden-match-selects" aria-hidden="true">
+                <select id="team-a-player-1"></select>
+                <select id="team-a-player-2"></select>
+                <select id="team-b-player-1"></select>
+                <select id="team-b-player-2"></select>
+              </div>
+              <!-- TEAM ASSIGNMENT -->
+              <div class="team-selection-grid redesigned-teams">
+                <div class="team-box team-a-box">
+                  <div class="team-heading">
+                    <span>⚔ TEAM A</span>
+                    <span class="team-count" id="team-a-count">0/2</span>
+                  </div>
+                  <div class="team-player-slots" id="team-a-slots">
+                    <div class="team-empty-slot">Select a player below</div>
+                    <div class="team-empty-slot">Select a player below</div>
+                  </div>
+                </div>
+                <div class="versus-divider">
+                  <span>VS</span>
+                </div>
+                <div class="team-box team-b-box">
+                  <div class="team-heading">
+                    <span>⚔ TEAM B</span>
+                    <span class="team-count" id="team-b-count">0/2</span>
+                  </div>
+                  <div class="team-player-slots" id="team-b-slots">
+                    <div class="team-empty-slot">Select a player below</div>
+                    <div class="team-empty-slot">Select a player below</div>
+                  </div>
+                </div>
+              </div>
+              <!-- AVAILABLE PLAYERS -->
+              <div class="available-player-panel">
+                <div class="available-player-header">
+                  <div>
+                    <h3 id="available-player-title">
+                      Available Players (All Levels)
+                    </h3>
+                    <p>Choose a player and assign them to a team.</p>
+                  </div>
+                  <div class="player-filter-controls">
+                    <input
+                      type="search"
+                      id="match-player-search"
+                      placeholder="Search player..."
+                    />
+                    <div class="student-filter" id="match-student-filter">
+                      <button
+                        type="button"
+                        class="student-filter-btn active"
+                        data-status="All"
+                      >
+                        All
+                      </button>
+                      <button
+                        type="button"
+                        class="student-filter-btn"
+                        data-status="Student"
+                      >
+                        Student
+                      </button>
+                      <button
+                        type="button"
+                        class="student-filter-btn"
+                        data-status="Non-student"
+                      >
+                        Non-student
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="available-player-grid"
+                  id="available-match-players"
+                ></div>
+                <div class="empty-state" id="no-match-players">
+                  <div>♙</div>
+                  <strong>No available players found</strong>
+                  <p>Try changing the level or search filters.</p>
+                </div>
+              </div>
+              <!-- ACTIONS -->
+              <div class="form-actions match-actions">
+                <button
+                  type="reset"
+                  class="btn-secondary"
+                  id="clear-match-form"
+                >
+                  Clear Form
+                </button>
+                <button
+                  type="submit"
+                  class="btn-primary"
+                  id="start-match-button"
+                >
+                  + Start Match
+                </button>
+              </div>
+            </form>
+          </section>
+          <!-- ACTIVE MATCHES -->
+          <section class="panel match-list-panel">
+            <div class="panel-heading">
+              <div>
+                <h3>Active Matches</h3>
+                <p>Monitor ongoing badminton matches.</p>
+              </div>
+              <span class="count-label" id="active-match-label">0 Active</span>
+            </div>
+            <div id="active-match-list" class="match-card-grid"></div>
+            <div id="no-active-matches" class="empty-state">
+              <div>⚔</div>
+              <strong>No active matches</strong>
+              <p>Create a match to begin playing.</p>
+            </div>
+          </section>
+          <!-- COMPLETED MATCHES -->
+          <section class="panel match-list-panel">
+            <div class="panel-heading">
+              <div>
+                <h3>Completed Matches</h3>
+                <p>Previously finished matches.</p>
+              </div>
+              <span class="count-label" id="completed-match-label"
+                >0 Completed</span
+              >
+            </div>
+            <div class="table-wrapper">
+              <table class="player-table">
+                <thead>
+                  <tr>
+                    <th>MATCH</th>
+                    <th>COURT</th>
+                    <th>TEAM A</th>
+                    <th>TEAM B</th>
+                    <th>DATE / TIME</th>
+                    <th>STATUS</th>
+                  </tr>
+                </thead>
+                <tbody id="completed-match-body"></tbody>
+              </table>
+            </div>
+            <div id="no-completed-matches" class="empty-state">
+              <div>◷</div>
+              <strong>No completed matches yet</strong>
+              <p>Finished matches will appear here.</p>
+            </div>
+          </section>
+        </section>
+        <!-- PAYMENT MANAGEMENT PAGE -->
+        <section class="page" id="payments-page">
+          <header class="topbar">
+            <div>
+              <h1>Payment Management</h1>
+              <p>
+                See each player's total match fees, payments already made, and
+                remaining balance.
+              </p>
+            </div>
+            <div class="date-display"><span>●</span> Offline Mode</div>
+          </header>
+          <section class="payment-stats-grid">
+            <div class="payment-stat-card collected">
+              <span>Total Collected</span>
+              <h2 id="payment-total-collected">₱0.00</h2>
+              <small>Payments marked as paid</small>
+            </div>
+            <div class="payment-stat-card pending">
+              <span>Total Unpaid</span>
+              <h2 id="payment-total-unpaid">₱0.00</h2>
+              <small>Outstanding player balances</small>
+            </div>
+            <div class="payment-stat-card transactions">
+              <span>Players with Records</span>
+              <h2 id="payment-total-transactions">0</h2>
+              <small>Unique player accounts with match fees</small>
+            </div>
+          </section>
+          <section class="panel payment-records-panel">
+            <div class="panel-heading">
+              <div>
+                <h3>Player Payment Records</h3>
+                <p>
+                  One summary per player. Open their history or collect all
+                  outstanding match fees when they leave.
+                </p>
+              </div>
+              <span class="count-label" id="payment-count">0 Records</span>
+            </div>
+            <div class="payment-toolbar">
+              <input
+                type="search"
+                id="payment-search"
+                placeholder="Search player or match number..."
+              />
+              <select
+                id="payment-status-filter"
+                aria-label="Filter payment status"
+              >
+                <option value="All">All Players</option>
+                <option value="Unpaid">Players with Balance</option>
+                <option value="Paid">Fully Settled</option>
+              </select>
+            </div>
+            <div class="table-wrapper">
+              <table class="player-table payment-table">
+                <thead>
+                  <tr>
+                    <th>PLAYER</th>
+                    <th>MATCHES</th>
+                    <th>TOTAL FEES</th>
+                    <th>PAID</th>
+                    <th>BALANCE DUE</th>
+                    <th>STATUS</th>
+                    <th>ACTION</th>
+                  </tr>
+                </thead>
+                <tbody id="payment-table-body"></tbody>
+              </table>
+            </div>
+            <div id="no-payments" class="empty-state">
+              <div>₱</div>
+              <strong>No payment records yet</strong>
+              <p>
+                Complete a match to automatically create player payment records.
+              </p>
+            </div>
+          </section>
+        </section>
+        <section class="page" id="history-page">
+          <header class="topbar">
+            <div>
+              <h1>Session History</h1>
+              <p>Review completed badminton matches from this device.</p>
+            </div>
+          </header>
+          <section class="payment-stats-grid history-stats-grid">
+            <div class="payment-stat-card">
+              <span>Completed Matches</span>
+              <h2 id="history-total-matches">0</h2>
+              <small>Finished matches saved locally</small>
+            </div>
+            <div class="payment-stat-card pending">
+              <span>Total Players Played</span>
+              <h2 id="history-total-players">0</h2>
+              <small>Player appearances in completed matches</small>
+            </div>
+            <div class="payment-stat-card transactions">
+              <span>Total Shuttle Fees</span>
+              <h2 id="history-total-fees">₱0.00</h2>
+              <small>Total recorded player fees after discounts</small>
+            </div>
+          </section>
+          <section class="panel payment-records-panel">
+            <div class="panel-heading">
+              <div>
+                <h3>Completed Match Records</h3>
+                <p>Every match is saved automatically when you finish it.</p>
+              </div>
+              <span class="count-label" id="history-count">0 Matches</span>
+            </div>
+            <div class="payment-toolbar">
+              <input
+                type="search"
+                id="history-search"
+                placeholder="Search match, court, or player..."
+                aria-label="Search match history"
+              />
+            </div>
+            <div class="table-wrapper">
+              <table class="player-table history-table">
+                <thead>
+                  <tr>
+                    <th>MATCH</th>
+                    <th>COURT</th>
+                    <th>TEAM A</th>
+                    <th>TEAM B</th>
+                    <th>STARTED</th>
+                    <th>FINISHED</th>
+                    <th>SHUTTLE FEE</th>
+                  </tr>
+                </thead>
+                <tbody id="history-table-body"></tbody>
+              </table>
+            </div>
+            <div id="no-history" class="empty-state">
+              <div>◷</div>
+              <strong>No completed matches yet</strong>
+              <p>Finish a match to see it recorded here.</p>
+            </div>
+          </section>
+        </section>
+        <section class="page" id="settings-page">
+          <header class="topbar">
+            <div>
+              <h1>Settings</h1>
+              <p>Application settings.</p>
+            </div>
+          </header>
+          <div class="panel coming-soon">
+            <h2>Application Settings</h2>
+            <p>We'll build this in a later step.</p>
+          </div>
+        </section>
+        <footer>
+          <p>
+            Badminton Queue Management System <span>•</span> Offline Version 1.0
+          </p>
+        </footer>
+      </main>
+    </div>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("./service-worker.js")
+            .then(() => console.log("SMASHQ offline mode ready"))
+            .catch((error) => console.error("Offline setup error:", error));
+        });
+      }
+    </script>
+    <script src="script.js"></script>
+  </body>
+</html>
